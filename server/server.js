@@ -7,8 +7,10 @@ const connectDB = require('./src/config/db')
 const logger = require('./src/logger/logger')
 const errorHandler = require('./src/middlewares/errorHandler')
 
+const perfumeRouter = require('./src/routers/perfumeRouter')
+
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 
 // Configure Express to parse JSON requests with a maximum size limit of 50mb
 app.use(express.json({ limit: '100mb' }))
@@ -27,6 +29,8 @@ app.use(cookieParser())
 app.get('/health-check', (req, res) => {
   res.send('server is healthy!!')
 })
+
+app.use('/api/perfumes', perfumeRouter)
 
 app.use(errorHandler)
 
