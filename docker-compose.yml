@@ -1,0 +1,36 @@
+name: halimuyak
+
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./server/.env
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - halimuyak
+    ports:
+      - "5000:5000"
+  
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./client/.env
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - halimuyak
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+networks:
+  halimuyak:
+    driver: bridge
