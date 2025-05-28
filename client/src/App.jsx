@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Suspense, lazy } from 'react'
 import './App.css'
+
+const HalimuyakLanding = lazy(() => import('./pages/Landing/LandingPage'))
 
 function App() {
 
   return (
-    <>
-      <h1>Halimuyak</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<HalimuyakLanding />} />
+      </Routes>
+    </Router>
   )
 }
 
