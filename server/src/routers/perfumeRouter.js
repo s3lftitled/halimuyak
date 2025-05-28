@@ -8,7 +8,12 @@ router.post(
   '/v1/add-perfume',
   upload.single("image"),          
   parseLinksMiddleware,            
-  PerfumeController.addNewPerfumeController  
+  PerfumeController.addNewPerfume
+)
+
+router.get(
+  '/v1/fetch-perfume/',
+  PerfumeController.fetchAllPerfumes
 )
 
 module.exports = router
