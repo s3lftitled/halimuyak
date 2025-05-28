@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const perfumeSchema = new mongoose.Schema({
-  name: { type: String, minlength: 3, maxlength: 30, required: true },
+  name: { type: String, minlength: 3, maxlength: 50, required: true },
   notes: [{ type: String }],
   image: { type: String } ,
   links: {
@@ -11,7 +11,7 @@ const perfumeSchema = new mongoose.Schema({
   },
   ratings: { type: Number },
   reviews: [{ type: String }],
-  inspiration: { type: String, minlength: 3, maxlength: 30 }
+  inspiration: { type: String, minlength: 3, maxlength: 50 }
 })
 
 module.exports = mongoose.model('PerfumeCollection', perfumeSchema)
