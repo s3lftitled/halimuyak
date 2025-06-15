@@ -12,7 +12,7 @@ passport.use(
     try {
       const existingUser = await User.findOne({ email: profile.emails[0].value })
 
-      if (existingUser) return done(null, existingUser);
+      if (existingUser) return done(null, existingUser)
 
       const newUser = await User.create({
         username: profile.displayName,

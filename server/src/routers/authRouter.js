@@ -1,6 +1,6 @@
 const express = require('express')
 const passport = require('passport')
-const authController = require('../controllers/authController')
+const AuthController = require('../controllers/authController')
 
 const router = express.Router()
 
@@ -13,7 +13,7 @@ router.get('/v1/auth/google', passport.authenticate('google', {
 router.get(
   '/v1/auth/google/callback',
   passport.authenticate('google', { session: false }),
-  authController.googleCallback
+  AuthController.googleCallback
 )
 
 module.exports = router

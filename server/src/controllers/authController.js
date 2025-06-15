@@ -1,16 +1,25 @@
-const jwt = require('jsonwebtoken')
 const HTTP_STATUS = require('../constants/httpConstants')
+const logger = require('../logger/logger')
+const { generateTokens } = require('../middlewares/jsonWebTokens')
 
-exports.googleCallback = (req, res) => {
-  const user = req.user;
+class AuthController {
+  async googleCallback (req, res, next) {
+    const user = req.user
 
-  // Create JWT token
-  const token = jwt.sign(
-    { id: user._id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: '1h' }
-  )
+    try {
+      const { refreshToken, accessToken } = generateTokens(user)
 
-  // You can also redirect to frontend with the token as a query param
-  res.status(HTTP_STATUS.OK).json({ message: 'Logged in with Google', token })
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+      })
+
+      res.status(HTTP_STATUS.OK).json({ message: 'Logged in with Google', accessToken })
+    } catch (error) {
+      logger.error(`Error logging in- ${error.message}`)
+      next(error)
+    }
+  }
 }
+
+module.exports = new AuthController()
