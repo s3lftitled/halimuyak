@@ -5,11 +5,16 @@ require('dotenv').config()
 
 const connectDB = require('./src/config/db')
 const logger = require('./src/logger/logger')
+const passport = require('./src/config/passport')
 const errorHandler = require('./src/middlewares/errorHandler')
 
 const perfumeRouter = require('./src/routers/perfumeRouter')
+const authRouter = require('./src/routers/authRouter') 
 
 const app = express()
+
+app.use(passport.initialize())
+
 const port = process.env.PORT || 5001
 
 // Configure Express to parse JSON requests with a maximum size limit of 50mb
@@ -31,6 +36,8 @@ app.get('/health-check', (req, res) => {
 })
 
 app.use('/api/perfumes', perfumeRouter)
+app.use('/api', authRouter) 
+
 
 app.use(errorHandler)
 
