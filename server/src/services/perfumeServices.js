@@ -110,23 +110,27 @@ const fetchAllPerfumesService = async ({ page, limit, search } = {}) => {
     // STEP 1: Try exact regex matching first
     const regexTerms = searchTerms.map(term => new RegExp(term, 'i'))
 
-   const exactFilter = regexTerms.length === 1
-    ? {
-        $or: [
-          { name: regexTerms[0] },
-          { inspiration: regexTerms[0] },
-          { notes: { $elemMatch: { $regex: regexTerms[0] } } },
-        ]
-      }
-    : {
-        $and: regexTerms.map(regex => ({
+    // Construct a MongoDB filter to perform an exact (regex-based) match on one or more fields.
+    // If there's only one search term, use a simple `$or` filter across `name`, `inspiration`, and `notes`.
+    // If multiple terms exist, ensure all are matched by using `$and`, where each term must match at least
+    // one of the fields (`name`, `inspiration`, or any entry in the `notes` array).
+    const exactFilter = regexTerms.length === 1
+      ? {
           $or: [
-            { name: regex },
-            { inspiration: regex },
-            { notes: { $elemMatch: { $regex: regex } } }, 
+            { name: regexTerms[0] },
+            { inspiration: regexTerms[0] },
+            { notes: { $elemMatch: { $regex: regexTerms[0] } } },
           ]
-        }))
-      }
+        }
+      : {
+          $and: regexTerms.map(regex => ({
+            $or: [
+              { name: regex },
+              { inspiration: regex },
+              { notes: { $elemMatch: { $regex: regex } } }, 
+            ]
+          }))
+        }
 
     // Get exact matches first
     const exactMatches = await PerfumeCollection.find(exactFilter).lean()

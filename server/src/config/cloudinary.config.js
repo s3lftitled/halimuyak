@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "halimuyak_perfumes", // Optional folder name in Cloudinary
+    folder: "halimuyak_perfumes",
     allowed_formats: ["jpg", "png", "jpeg"],
     transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
