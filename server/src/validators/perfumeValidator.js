@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const perfumeSchema = Joi.object({
+const perfumeValidator = Joi.object({
   name: Joi.string()
     .min(3)
     .max(50)
@@ -83,4 +83,4 @@ const perfumeSchema = Joi.object({
     })
 });
 
-module.exports = perfumeSchema;
+module.exports = perfumeValidator
