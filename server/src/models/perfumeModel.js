@@ -11,7 +11,12 @@ const perfumeSchema = new mongoose.Schema({
   },
   ratings: { type: Number },
   reviews: [{ type: String }],
-  inspiration: { type: String, minlength: 3, maxlength: 50 }
+  inspiration: { type: String, minlength: 3, maxlength: 50 },
+  projection: { type: Number },
+  performance: { type: Number },
+  longevity: { type: Number },
+  sillage: { type: Number },
+  og_similarity: { type: Number }
 })
 
 module.exports = mongoose.model('PerfumeCollection', perfumeSchema)
