@@ -1,17 +1,14 @@
-const Joi = require('joi');
+const Joi = require('joi')
 
+// 🌺 Perfume Validator Schema
 const perfumeValidator = Joi.object({
-  name: Joi.string()
-    .min(3)
-    .max(50)
-    .required()
-    .messages({
-      'string.base': 'Name must be a text.',
-      'string.empty': 'Name is required.',
-      'string.min': 'Name must be at least 3 characters.',
-      'string.max': 'Name must not exceed 50 characters.',
-      'any.required': 'Name is a required field.'
-    }),
+  name: Joi.string().min(3).max(50).required().messages({
+    'string.base': 'Name must be a text.',
+    'string.empty': 'Name is required.',
+    'string.min': 'Name must be at least 3 characters.',
+    'string.max': 'Name must not exceed 50 characters.',
+    'any.required': 'Name is a required field.'
+  }),
 
   notes: Joi.alternatives()
     .try(
@@ -81,6 +78,6 @@ const perfumeValidator = Joi.object({
       'string.max': 'Inspiration must not exceed 50 characters.',
       'any.required': 'Inspiration is a required field.'
     })
-});
+})
 
 module.exports = perfumeValidator
