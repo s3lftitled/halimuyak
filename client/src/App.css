@@ -1,5 +1,6 @@
 #root {
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 * {
@@ -11,6 +12,7 @@
 body {
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
-  background: linear-gradient(135deg, rgb(219, 230, 255) 0%, rgb(219, 255, 234) 50%, rgb(255, 245, 189) 100%);
   cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
