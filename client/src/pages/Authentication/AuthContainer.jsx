@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import LoginForm from './Login'
 import RegisterForm from './Register'
-import './styles.css'
+import './AuthStyles.css'
 
 const AuthContainer = () => {
   const [currentView, setCurrentView] = useState('login')

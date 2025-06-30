@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, AlertCircle, CheckCircle, Shield } from 'lucide-react'
-import './styles.css'
+import './AuthStyles.css'
 
 const RegisterForm = ({ onSwitchToLogin, onRegisterSuccess }) => {
   const [formData, setFormData] = useState({
