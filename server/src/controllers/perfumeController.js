@@ -23,6 +23,7 @@ class PerfumeController {
     const { page, limit, search } = req.query
 
     try {
+      console.log(req.query)
       const foundPerfumes = await fetchAllPerfumesService({ page, limit, search })
 
       res.status(HTTP_STATUS.OK).json({ foundPerfumes })

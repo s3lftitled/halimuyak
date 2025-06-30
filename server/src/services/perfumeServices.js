@@ -10,9 +10,7 @@ const { isFuzzyMatch } = require('../utils/fuzzyMatch')
 const addNewPerfumeService = async (name, notes, image, links = {}, inspiration) => {
   try {
     // Sanitize basic string inputs to remove unwanted characters or tags
-    const sanitizedName = sanitizeText(name)
-    const sanitizedInspiration = sanitizeText(inspiration)
-    const sanitizedImage = sanitizeText(image)
+    const { sanitizedName, sanitizedInspiration, sanitizedImage } = sanitizeText({ name, inspiration, image })
 
     // Normalize the 'notes' input to an array and sanitize it
     // If notes is a string, split by commas and clean up each note
@@ -73,8 +71,9 @@ const addNewPerfumeService = async (name, notes, image, links = {}, inspiration)
 
 const fetchAllPerfumesService = async ({ page, limit, search } = {}) => {
   try {
-    // Sanitize and normalize the search input to lowercase for case-insensitive matching
-    const sanitizedSearch = sanitizeText(search).toLowerCase()
+     const sanitizedSearch = sanitizeText(search).toLowerCase()
+
+     console.log(sanitizedSearch)
 
     // Sanitize pagination inputs: ensure page and limit are positive numbers within reasonable bounds
     const sanitizedPage = Number(page) > 0 ? Number(page) : 1
