@@ -6,7 +6,7 @@ passport.use(
   new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/api/v1/auth/google/callback',
+    callbackURL: '/api/auth/v1/google/callback',
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -17,6 +17,7 @@ passport.use(
       const newUser = await User.create({
         username: profile.displayName,
         email: profile.emails[0].value,
+        isVerified: true
       })
       done(null, newUser)
     } catch (err) {
