@@ -13,6 +13,7 @@ const errorHandler = require('./src/middlewares/errorHandler') // Global error h
 // Import routers
 const perfumeRouter = require('./src/routers/perfumeRouter')  // Routes for perfume-related endpoints
 const authRouter = require('./src/routers/authRouter')        // Routes for authentication
+const brandRouter = require('./src/routers/brandRouter')      // Routes for brand-related endpoints
 
 // Initialize the Express app
 const app = express()
@@ -39,6 +40,8 @@ app.use(cors(corsOptions))                          // Apply CORS settings
 // Parse cookies from incoming requests
 app.use(cookieParser())
 
+app.use(logger.logRequest)
+
 // Health check endpoint to verify server is running
 app.get('/health-check', (req, res) => {
   res.send('server is healthy!!')
@@ -47,6 +50,7 @@ app.get('/health-check', (req, res) => {
 // Route middlewares
 app.use('/api/perfumes', perfumeRouter)             // Handle routes starting with /api/perfumes
 app.use('/api/auth', authRouter)                    // Handle routes starting with /api/auth
+app.use('/api/brands', brandRouter)                 // Handle routes starting with /api/brands
 
 // Global error-handling middleware
 app.use(errorHandler)
