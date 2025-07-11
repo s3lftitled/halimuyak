@@ -5,7 +5,7 @@ const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || HTTP_STATUS.INTERNAL_SERVER_ERROR
   const message = err.message || 'Something went wrong!'
 
-  logger.error(`Error: ${message}`)
+  logger.logError(err, req)
 
   res.status(statusCode).json({ 
     success: false, 
