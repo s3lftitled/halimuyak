@@ -1,4 +1,5 @@
 const sanitizeHtml = require('sanitize-html')
+const mongoose = require('mongoose')
 
 // ✨ Basic sanitize options: strip all tags and attributes
 const sanitizedOpts = {
@@ -34,10 +35,30 @@ const sanitizeText = (text = '') =>
     ? sanitizeHtml(text, sanitizedOpts).trim()
     : ''
 
+const isValidMongoId = (id) => {
+  if(!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid MongoDB ObjectId')
+  }
+}
+
+/** 
+  * Sanitize pagination inputs: ensure page and limit are positive numbers within reasonable bounds
+  * @param {any} page - The page number to sanitize
+  * @param {any} limit - The limit per page to sanitize
+  * @returns {{ page: number, limit: number }} Sanitized pagination values
+*/
+const sanitizePaginationInputs = ( page, limit ) => {
+  const sanitizedPage = Number(page) > 0 ? Number(page) : 1
+  const sanitizedLimit = Number(limit) > 0 && Number(limit) <= 20 ? Number(limit) : 10
+
+  return { sanitizedPage, sanitizedLimit }
+}
 
 module.exports = {
   cleanArray,
   sanitizeObject,
   sanitizeText,
-  sanitizedOpts
+  sanitizedOpts,
+  isValidMongoId,
+  sanitizePaginationInputs,
 }
