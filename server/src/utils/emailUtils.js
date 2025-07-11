@@ -3,10 +3,15 @@ const crypto = require('crypto')
 const logger = require('../logger/logger')
 require('dotenv').config()
 
-// 📧 Email Utility Class
+/**
+ * 📧 Utility class for generating verification codes and sending verification emails using Gmail via Nodemailer.
+ */
 class EmailUtil {
   constructor() {
-    // Setup transporter for sending emails using Gmail
+    /**
+     * Nodemailer transporter configured to use Gmail with credentials from environment variables.
+     * @type {import('nodemailer').Transporter}
+     */
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -19,12 +24,21 @@ class EmailUtil {
     })
   }
 
-  // 🔐 Generates a 6-digit hex verification code (e.g., 'a1b2c3')
+  /**
+   * Generates a 6-character hexadecimal verification code.
+   * @returns {Promise<string>} A randomly generated 6-character hex code (e.g., 'a1b2c3')
+   */
   async generateVerificationCode() {
     return crypto.randomBytes(3).toString('hex')
   }
 
-  // 📩 Sends a verification email to the user
+  /**
+   * Sends a verification email with a verification code to the specified address.
+   * @param {string} email - Recipient's email address
+   * @param {string} verificationCode - The verification code to include in the email
+   * @returns {Promise<void>}
+   * @throws {Error} If sending the email fails
+   */
   async sendVerificationEmail(email, verificationCode) {
     try {
       const mailOptions = {

@@ -1,5 +1,13 @@
-// Custom error class extending the built-in Error object
+/**
+ * Custom error class that extends the built-in Error class to include HTTP status codes
+ * and a flag for operational errors (as opposed to programmer errors).
+ */
 class AppError extends Error {
+  /**
+   * Constructs an AppError instance.
+   * @param {string} message - A human-readable error message
+   * @param {number} statusCode - The HTTP status code associated with the error
+   */
   constructor(message, statusCode) {
     super(message) // Call parent class (Error) constructor with the error message
     this.statusCode = statusCode // Attach custom HTTP status code
@@ -10,8 +18,14 @@ class AppError extends Error {
   }
 }
 
-// Assertion utility function
-// Throws an AppError if the provided condition is false
+/**
+ * Assertion utility that throws an AppError if the provided condition is false.
+ *
+ * @param {boolean} condition - The condition to evaluate
+ * @param {string} message - Error message if the condition is false
+ * @param {number} statusCode - HTTP status code to attach to the error
+ * @throws {AppError} If the condition is false
+ */
 const appAssert = (condition, message, statusCode) => {
   if (!condition) throw new AppError(message, statusCode)
 }

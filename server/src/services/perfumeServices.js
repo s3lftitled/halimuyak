@@ -7,6 +7,20 @@ const sanitizeHtml = require('sanitize-html')
 const { sanitizedOpts, cleanArray, sanitizeText, sanitizePaginationInputs } = require('../utils/sanitizeUtils')
 const { isFuzzyMatch } = require('../utils/fuzzyMatch')
 
+/**
+ * Adds a new perfume to the collection after sanitizing, validating, and checking for duplicates.
+ *
+ * @param {string} name - The name of the perfume.
+ * @param {string[]|string} notes - Notes describing the perfume (e.g., 'citrus, floral').
+ * @param {string} image - URL of the perfume image.
+ * @param {Object} [links={}] - Optional e-commerce links for the perfume.
+ * @param {string} [links.shopee] - Shopee product URL.
+ * @param {string} [links.lazada] - Lazada product URL.
+ * @param {string} [links.tiktok] - TikTok shop URL.
+ * @param {string} inspiration - The inspiration behind the perfume.
+ * @returns {Promise<Object>} The newly created perfume document.
+ * @throws {Error} If validation fails, a duplicate perfume exists, or a database error occurs.
+ */
 const addNewPerfumeService = async (name, notes, image, links = {}, inspiration) => {
   try {
     // Sanitize basic string inputs to remove unwanted characters or tags
@@ -68,6 +82,17 @@ const addNewPerfumeService = async (name, notes, image, links = {}, inspiration)
     throw err
   }
 }
+
+/**
+ * Fetches all perfumes with optional fuzzy or exact search and paginated results.
+ *
+ * @param {Object} [params={}] - Parameters for pagination and search.
+ * @param {number|string} [params.page=1] - The current page number (defaults to 1).
+ * @param {number|string} [params.limit=10] - The number of items per page (defaults to 10).
+ * @param {string} [params.search] - Optional search query for perfume name, notes, or inspiration.
+ * @returns {Promise<Object>} Paginated perfume results and metadata.
+ * @throws {Error} If any database or search operation fails.
+ */
 
 const fetchAllPerfumesService = async ({ page, limit, search } = {}) => {
   try {

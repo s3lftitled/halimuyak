@@ -8,7 +8,15 @@ const EmailUtil = require('../utils/emailUtils') // Utilities for email-related 
 const PasswordUtil = require('../utils/passwordUtils') // Utilities for password hashing and comparison
 const { generateTokens } = require('../middlewares/jsonWebTokens') // Function to generate JWT access and refresh tokens
 
-// Service for registering a new user
+/**
+ * Registers a new user.
+ *
+ * @param {string} email - The user's email address.
+ * @param {string} username - The user's desired username.
+ * @param {string} password - The user's password.
+ * @returns {Promise<Object>} The newly created user object.
+ * @throws Will throw an error if validation fails or the user already exists.
+ */
 const registerUserService = async (email, username, password) => {
   try {
     // Sanitize the username to remove unwanted characters
@@ -60,6 +68,14 @@ const registerUserService = async (email, username, password) => {
   }
 }
 
+/**
+ * Verifies a user's email using the verification code sent to their inbox.
+ *
+ * @param {string} email - The user's email address.
+ * @param {string} verificationCode - The code sent to the user's email.
+ * @returns {Promise<Object>} A success message object.
+ * @throws Will throw an error if verification fails or the code is expired.
+ */
 const verifyEmailService = async (email, verificationCode) => {
   try {
     // Sanitize email and verification code to remove HTML or malicious input
@@ -100,7 +116,14 @@ const verifyEmailService = async (email, verificationCode) => {
   }
 }
 
-// Service for logging in an existing user
+/**
+ * Logs in a user by validating credentials and returning JWT tokens.
+ *
+ * @param {string} email - The user's email address.
+ * @param {string} password - The user's password.
+ * @returns {Promise<{ user: Object, accessToken: string, refreshToken: string }>} Authenticated user and tokens.
+ * @throws Will throw an error if login credentials are invalid.
+ */
 const logInService = async (email, password) => {
   try {
     // Construct login input
