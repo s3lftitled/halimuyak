@@ -4,7 +4,7 @@ const { appAssert } = require('../utils/appAssert')
 const HTTP_STATUS = require('../constants/httpConstants')
 const perfumeValidator = require('../validators/perfumeValidator')
 const sanitizeHtml = require('sanitize-html')
-const { sanitizedOpts, cleanArray, sanitizeText } = require('../utils/sanitizeUtils')
+const { sanitizedOpts, cleanArray, sanitizeText, sanitizePaginationInputs } = require('../utils/sanitizeUtils')
 const { isFuzzyMatch } = require('../utils/fuzzyMatch')
 
 const addNewPerfumeService = async (name, notes, image, links = {}, inspiration) => {
@@ -75,9 +75,7 @@ const fetchAllPerfumesService = async ({ page, limit, search } = {}) => {
 
      console.log(sanitizedSearch)
 
-    // Sanitize pagination inputs: ensure page and limit are positive numbers within reasonable bounds
-    const sanitizedPage = Number(page) > 0 ? Number(page) : 1
-    const sanitizedLimit = Number(limit) > 0 && Number(limit) <= 100 ? Number(limit) : 20
+     const { sanitizedPage, sanitizedLimit } = sanitizePaginationInputs(page, limit)
 
     // Split sanitized search string into individual keywords, filtering out empty strings
     // Supports splitting by spaces, commas, or combinations (e.g., "floral, fresh" -> ["floral", "fresh"])
