@@ -11,6 +11,11 @@ const perfumeSchema = new mongoose.Schema({
   },
   ratings: { type: Number },
   reviews: [{ type: String }],
+  type: {
+    type: String,
+    enum: ['inspired', 'own blend'],
+    required: true
+  },
   inspiration: { type: String, minlength: 3, maxlength: 50 },
   projection: { type: Number },
   performance: { type: Number },
